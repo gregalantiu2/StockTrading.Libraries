@@ -1,2 +1,2 @@
 # StockTrading.Libraries
-Class libraries to be share between Desktop and Web version of StockTrading app
+Class libraries that contain classes that are shared between Desktop and Web version of StockTrading app
