@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockTrading.Libraries
+namespace StockTrading.DataAccess
 {
     public class Class1
     {
