@@ -18,14 +18,12 @@ namespace StockTrading.Libraries
         {
             ApiKey = apikey;
             SecretKey = secretKey;
+            alpacaTradingClient = Alpaca.Markets.Environments.Paper.GetAlpacaTradingClient(new SecretKey(ApiKey, SecretKey));
+            alpacaDataClient = Environments.Paper.GetAlpacaDataClient(new SecretKey(ApiKey, SecretKey));
         }
 
-        public async Task Run()
+        public async Task RunDayTradingProgram()
         {
-            alpacaTradingClient = Environments.Paper.GetAlpacaTradingClient(new SecretKey(ApiKey, SecretKey));
-
-            alpacaDataClient = Environments.Paper.GetAlpacaDataClient(new SecretKey(ApiKey, SecretKey));
-
             // Get information about current account value.
             while (true)
             {
@@ -34,6 +32,12 @@ namespace StockTrading.Libraries
                 portfolioValue = account.Equity;
             }
 
+        }
+        public async Task<Tuple<bool,DateTime>> MarketTimesGet()
+        {
+            var clock = await alpacaTradingClient.GetClockAsync();
+
+            return Tuple.Create(clock.IsOpen, clock.NextCloseUtc);
         }
     }
 }
