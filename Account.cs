@@ -1,6 +1,7 @@
 ﻿using Alpaca.Markets;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,15 +23,14 @@ namespace StockTrading.Libraries
             alpacaDataClient = Environments.Paper.GetAlpacaDataClient(new SecretKey(ApiKey, SecretKey));
         }
 
-        public async Task RunDayTradingProgram()
+        public async Task RunDayTradingProgram(List<string> symbols)
         {
-            // Get information about current account value.
-            while (true)
-            {
-                var account = await alpacaTradingClient.GetAccountAsync();
-                buyingPower = account.BuyingPower;
-                portfolioValue = account.Equity;
-            }
+            //Dictionary<string, decimal> transactions = new Dictionary<string, decimal>();
+
+            //transactions = await GetStonkPriceChange(symbols);
+
+            //foreach(var )
+
 
         }
         public async Task<Tuple<bool,DateTime>> MarketTimesGet()
@@ -38,6 +38,24 @@ namespace StockTrading.Libraries
             var clock = await alpacaTradingClient.GetClockAsync();
 
             return Tuple.Create(clock.IsOpen, clock.NextCloseUtc);
+        }
+        public async Task<Dictionary<string, decimal>> GetStonkPriceChange(List<string> symbols)
+        {
+            Dictionary<string, decimal> stonkPriceChanges = new Dictionary<string, decimal>();
+
+            foreach(var symbol in symbols)
+            {
+                var bars = await alpacaDataClient.GetBarSetAsync(new BarSetRequest(symbol, TimeFrame.FifteenMinutes) {Limit = 1 });
+
+                var startPrice = bars[symbol].First().Open;
+                var endPrice = bars[symbol].Last().Close;
+
+                var priceChange = endPrice - startPrice;
+
+                stonkPriceChanges.Add(symbol, priceChange);
+            }
+
+            return stonkPriceChanges;
         }
     }
 }
