@@ -1,4 +1,5 @@
 ﻿using Alpaca.Markets;
+using StockTrading.Libraries.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +9,22 @@ using System.Threading.Tasks;
 
 namespace StockTrading.Libraries
 {
-    public class AlpacaAlgorithm1
+    public class Algorithm1
     {
-        private IAlpacaTradingClient alpacaTradingClient;
-        public AlpacaAlgorithm1(string apikey, string secretKey)
+        private IMarketData _marketData;
+        private ITransactions _transactions;
+        public Algorithm1(IMarketData marketData,ITransactions transactions)
         {
-            alpacaTradingClient = Alpaca.Markets.Environments.Paper.GetAlpacaTradingClient(new SecretKey(apikey, secretKey));
+            _marketData = marketData;
+            _transactions = transactions;
         }
-
         public async Task RunDayTradingProgram(List<string> symbols)
         {
             Dictionary<string, string> transactions = new Dictionary<string, string>();
 
             Dictionary<string, decimal> priceChanges = new Dictionary<string, decimal>();
 
-            priceChanges = await GetStonkPriceChange(symbols);
+            priceChanges = await _marketData.GetStonkPriceChange(symbols);
 
             foreach(var stonk in priceChanges)
             {
@@ -30,7 +32,7 @@ namespace StockTrading.Libraries
                 {
                     try
                     {
-                        var order = await alpacaTradingClient.PostOrderAsync(TrailingStopOrder.Buy(stonk.Key, 25, TrailOffset.InDollars(0.80M)));
+                        var order = await _transactions.TrailOrderBuy(stonk.Key, 25, 0.80M);
                         transactions.Add("Buy", "Bought " + stonk.Key + " at " + stonk.Value.ToString());
                     }
                     catch(HttpRequestException e)
@@ -42,7 +44,7 @@ namespace StockTrading.Libraries
                 {
                     try
                     {
-                        var order = await alpacaTradingClient.PostOrderAsync(TrailingStopOrder.Sell(stonk.Key, 25, TrailOffset.InDollars(0.80M)));
+                        var order = await _transactions.TrailOrderSell(stonk.Key, 25, 0.80M);
                         transactions.Add("Trailing Sell Posted", "Trailing stop order posted for " + order.Symbol + "trailing at "  + order.TrailOffsetInDollars.ToString());
                     }
                     catch (HttpRequestException e)
