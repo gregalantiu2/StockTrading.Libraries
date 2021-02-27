@@ -18,7 +18,7 @@ namespace StockTrading.Libraries
             _marketData = marketData;
             _transactions = transactions;
         }
-        public async Task RunDayTradingAlgo(List<string> symbols)
+        public async Task<Dictionary<string, string>> RunDayTradingAlgo(List<string> symbols)
         {
             Dictionary<string, string> transactions = new Dictionary<string, string>();
 
@@ -57,7 +57,7 @@ namespace StockTrading.Libraries
                     continue;
                 }
             }
-
+            return transactions;
         }
     }
 }
