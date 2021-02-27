@@ -18,7 +18,7 @@ namespace StockTrading.Libraries
             _marketData = marketData;
             _transactions = transactions;
         }
-        public async Task RunDayTradingProgram(List<string> symbols)
+        public async Task RunDayTradingAlgo(List<string> symbols)
         {
             Dictionary<string, string> transactions = new Dictionary<string, string>();
 
