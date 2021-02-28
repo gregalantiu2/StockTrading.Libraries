@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTrading.Libraries", "StockTrading.Libraries.csproj", "{E789A0E0-6A72-45C0-BEE5-7E4726A8EDC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTrading.Libraries", "StockTrading.Libraries.csproj", "{E789A0E0-6A72-45C0-BEE5-7E4726A8EDC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTrading.Test", "..\StockTrading.Test\StockTrading.Test.csproj", "{44E3BE91-14BC-47CC-9786-9BBA6AC3D4CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E789A0E0-6A72-45C0-BEE5-7E4726A8EDC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E789A0E0-6A72-45C0-BEE5-7E4726A8EDC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E789A0E0-6A72-45C0-BEE5-7E4726A8EDC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44E3BE91-14BC-47CC-9786-9BBA6AC3D4CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44E3BE91-14BC-47CC-9786-9BBA6AC3D4CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44E3BE91-14BC-47CC-9786-9BBA6AC3D4CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44E3BE91-14BC-47CC-9786-9BBA6AC3D4CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
