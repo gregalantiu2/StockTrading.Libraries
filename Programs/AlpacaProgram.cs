@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace StockTrading.Libraries.Programs
 {
@@ -14,7 +15,7 @@ namespace StockTrading.Libraries.Programs
             _algorithm = algorithm;
             _marketData = marketData;
         }
-        public async void RunDayTradingProgram(List<string> symbols)
+        public async IAsyncEnumerable<Dictionary<string,string>> RunDayTradingProgram(List<string> symbols)
         {
             var response = await _marketData.MarketTimesGet();
 
@@ -24,8 +25,9 @@ namespace StockTrading.Libraries.Programs
 
                 while(now < response.Item2)
                 {
-                    await _algorithm.ExecuteAlgo(symbols);
+                    yield return await _algorithm.ExecuteAlgo(symbols);
                     now = DateTime.Now;
+                    System.Threading.Thread.Sleep(6000);
                 }
             }
         }
