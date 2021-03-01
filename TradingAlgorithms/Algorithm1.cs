@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StockTrading.Libraries
 {
-    public class Algorithm1
+    public class Algorithm1 : IAlgorithm
     {
         private IMarketData _marketData;
         private ITransactions _transactions;
@@ -18,7 +18,7 @@ namespace StockTrading.Libraries
             _marketData = marketData;
             _transactions = transactions;
         }
-        public async Task<Dictionary<string, string>> RunDayTradingAlgo(List<string> symbols)
+        public async Task<Dictionary<string, string>> ExecuteAlgo(List<string> symbols)
         {
             Dictionary<string, string> transactions = new Dictionary<string, string>();
 
