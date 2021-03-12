@@ -59,5 +59,19 @@ namespace StockTrading.Libraries
             }
             return transactions;
         }
+        public async Task<Dictionary<string, string>> ExecuteAlgoTEST(List<string> symbols)
+        {
+            Dictionary<string, string> transactions = new Dictionary<string, string>();
+
+            Dictionary<string, decimal> priceChanges = new Dictionary<string, decimal>();
+
+            priceChanges = await _marketData.GetStonkPriceChange(symbols);
+
+            foreach (var stonk in priceChanges)
+            {
+                var order = await _transactions.TrailOrderBuy(stonk.Key, 25, 0.80M);
+            }
+            return transactions;
+        }
     }
 }
