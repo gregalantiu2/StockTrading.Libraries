@@ -16,32 +16,28 @@ namespace StockTrading.Libraries.Programs
             _algorithm = algorithm;
             _marketData = marketData;
         }
-        public async IAsyncEnumerable<Dictionary<string,string>> RunDayTradingProgram(List<string> symbols)
+        public async IAsyncEnumerable<Dictionary<string,string>> RunDayTradingProgram(List<string> symbols, int trailAmount,int upswingAmount)
         {
             var response = await _marketData.MarketTimesGet();
 
             if(response.Item1)
             {
-                var now = DateTime.Now;
-
-                while(now < response.Item2)
-                {
-                    yield return await _algorithm.ExecuteAlgo(symbols);
-                    now = DateTime.Now;
-                    System.Threading.Thread.Sleep(6000);
-                }
+                yield return await _algorithm.ExecuteAlgo(symbols,trailAmount,upswingAmount);
             }
         }
         public async Task<Dictionary<string, string>> RunDayTradingProgramTEST(List<string> symbols)
         {
             var response = await _marketData.MarketTimesGet();
 
-            if (response.Item1)
-            {
-                var now = DateTime.Now;
+            //if (response.Item1)
+            //{
+            //    var now = DateTime.Now;
 
-                return await _algorithm.ExecuteAlgoTEST(symbols);
-            }
+            //    return await _algorithm.ExecuteAlgoTEST(symbols);
+            //}
+
+            return await _algorithm.ExecuteAlgoTEST(symbols);
+
 
             return new Dictionary<string, string>();
         }

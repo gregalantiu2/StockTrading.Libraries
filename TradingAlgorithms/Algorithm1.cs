@@ -18,7 +18,7 @@ namespace StockTrading.Libraries
             _marketData = marketData;
             _transactions = transactions;
         }
-        public async Task<Dictionary<string, string>> ExecuteAlgo(List<string> symbols)
+        public async Task<Dictionary<string, string>> ExecuteAlgo(List<string> symbols, int trailAmount, int upswingAmount)
         {
             Dictionary<string, string> transactions = new Dictionary<string, string>();
 
@@ -28,7 +28,7 @@ namespace StockTrading.Libraries
 
             foreach(var stonk in priceChanges)
             {
-                if(stonk.Value < -3)
+                if(stonk.Value < (trailAmount < 0 ? trailAmount : trailAmount * -1))
                 {
                     try
                     {
@@ -40,7 +40,7 @@ namespace StockTrading.Libraries
                         transactions.Add("Error", e.Message);
                     }
                 }
-                else if(stonk.Value > 1)
+                else if(stonk.Value > upswingAmount)
                 {
                     try
                     {
